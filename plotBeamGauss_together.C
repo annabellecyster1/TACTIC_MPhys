@@ -24,26 +24,25 @@ void plot_multiple_beam_profiles_with_gauss_fit_and_fwhm(
     }
 
     // Normalize histograms so the peaks are at 1 (scale individually)
-    h1->Scale(1.0 / h1->GetMaximum());  // Normalize histogram 1
-    h2->Scale(1.0 / h2->GetMaximum());  // Normalize histogram 2
-    h3->Scale(1.0 / h3->GetMaximum());  // Normalize histogram 3
-
+    h1->Scale(1.0 / h1->GetMaximum());  
+    h2->Scale(1.0 / h2->GetMaximum());  
+    h3->Scale(1.0 / h3->GetMaximum());  
     // Apply manual offsets to histograms
-    h1->Add(h1, offset1); // Apply offset to the first histogram
-    h2->Add(h2, offset2); // Apply offset to the second histogram
-    h3->Add(h3, offset3); // Apply offset to the third histogram
+    h1->Add(h1, offset1); 
+    h2->Add(h2, offset2); 
+    h3->Add(h3, offset3); 
 
-    // Set line colors for the histograms
-    h1->SetLineColor(kRed);  // Color for the first histogram
-    h2->SetLineColor(kBlue); // Color for the second histogram
-    h3->SetLineColor(kGreen); // Color for the third histogram
+
+    h1->SetLineColor(kRed);  
+    h2->SetLineColor(kBlue);
+    h3->SetLineColor(kGreen); 
 
     // Set axis labels and titles
-    h1->SetTitle("Beam Energy Profile;Beam Energy (MeV);Normalized Counts");
-    h2->SetTitle("Beam Energy Profile;Beam Energy (MeV);Normalized Counts");
-    h3->SetTitle("Beam Energy Profile;Beam Energy (MeV);Normalized Counts");
+    h1->SetTitle("Beam Energy Profile;Beam Energy (MeV);Normalised Counts");
+    h2->SetTitle("Beam Energy Profile;Beam Energy (MeV);Normalised Counts");
+    h3->SetTitle("Beam Energy Profile;Beam Energy (MeV);Normalised Counts");
 
-    // Create a canvas to hold all the histograms
+  
     TCanvas *c = new TCanvas("c", "Multiple Beam Profiles with Gaussian Fit and FWHM", 800, 600);
 
     // Set x-axis range to limit between 15 and 25 MeV
@@ -51,20 +50,19 @@ void plot_multiple_beam_profiles_with_gauss_fit_and_fwhm(
     h2->GetXaxis()->SetRangeUser(15, 25);
     h3->GetXaxis()->SetRangeUser(15, 25);
 
-    // Set Y-axis limits dynamically based on the histograms (prevent re-scaling)
     double maxY = std::max({h1->GetMaximum(), h2->GetMaximum(), h3->GetMaximum()});
-    h1->GetYaxis()->SetRangeUser(0, maxY * 1.1); // Slightly extend y-axis for better visualization
+    h1->GetYaxis()->SetRangeUser(0, maxY * 1.1); // Slightly extend y-axis 
 
     // Draw the first histogram (beam profile)
     h1->SetLineWidth(2);
     h1->Draw("HIST");
 
     // Fit a Gaussian to the first histogram
-    TF1 *gausFit1 = new TF1("gausFit1", "gaus", 15, 25);  // Fit Gaussian in range 15-25 MeV
+    TF1 *gausFit1 = new TF1("gausFit1", "gaus", 15, 25);  
     h1->Fit(gausFit1, "R");
 
     // Draw the Gaussian fit over the histogram
-    gausFit1->SetLineColor(kRed);  // Color for the Gaussian fit
+    gausFit1->SetLineColor(kRed);  
     gausFit1->Draw("SAME");
 
     // Extract FWHM from the Gaussian fit
